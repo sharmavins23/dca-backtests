@@ -5,6 +5,11 @@ import datetime
 from strategies.Sit import Sit
 from strategies.DCA import DCA
 from strategies.HedgedDCA import HedgedDCA
+from strategies.VLGEBDCA import VLGEBDCA
+from strategies.SMABuySell import SMABuySell
+from strategies.BBMEDCA import BBMEDCA
+from strategies.AddBBMEDCA import AddBBMEDCA
+from strategies.StocksGoUp import StocksGoUp
 
 from utils import MarketDatapoint
 import matplotlib.pyplot as plt
@@ -21,7 +26,8 @@ yieldRates = []
 tickers = [filename for filename in os.listdir(
     "tickers") if filename.endswith(".csv")]
 tickers = [ticker[:-4] for ticker in tickers]
-strategies = [Sit, DCA, HedgedDCA]
+strategies = [Sit, DCA, HedgedDCA, VLGEBDCA,
+              SMABuySell, BBMEDCA, AddBBMEDCA, StocksGoUp]
 
 # ===== Data processing step ===================================================
 
@@ -33,6 +39,8 @@ def getMarketDatapoints(ticker: str) -> list[MarketDatapoint]:
         for line in file:
             data = line.split(",")
             if data[0] == "Date":
+                continue
+            if data[1] == "null":
                 continue
             dp = MarketDatapoint(
                 date=datetime.datetime.strptime(
@@ -56,7 +64,7 @@ def getYieldRates():
             data = line.split(",")
 
             # Some data points don't exist
-            if data[4] == "ND":
+            if data[4] == "ND" or data[4] == "null":
                 continue
 
             date = datetime.datetime.strptime(data[0], "%Y-%m-%d").date()
@@ -126,6 +134,7 @@ def main():
                      strategy.netWorthHistory, label=strategy.__class__.__name__)
         plt.legend()
         plt.savefig(f"graphs/Stock_{ticker}.png")
+        plt.close()
 
     # Also make one graph for each strategy
     for strategy in strategies:
@@ -140,6 +149,37 @@ def main():
                              strategyTracker.netWorthHistory, label=ticker)
         plt.legend()
         plt.savefig(f"graphs/Strat_{strategy.__name__}.png")
+        plt.close()
+
+    # Let's also make a graph for each ticker normalized over Sit strategy
+    for ticker in tickers:
+        plt.figure()
+        plt.title(f"Net worth of strategies for {ticker} (norm. Sit)")
+        plt.xlabel("Date")
+        plt.ylabel("Net worth (ratio)")
+        for strategy in strategyTrackers[ticker]:
+            plt.plot([dp.date for dp in datapoints[ticker]],
+                     [nw / strategyTrackers[ticker][0].netWorthHistory[i]
+                      for i, nw in enumerate(strategy.netWorthHistory)],
+                     label=strategy.__class__.__name__)
+        plt.legend()
+        plt.savefig(f"graphs/Stock_{ticker}_Normalized.png")
+        plt.close()
+
+    # Finally, let's create graphs for each ticker normalized over DCA strategy
+    for ticker in tickers:
+        plt.figure()
+        plt.title(f"Net worth of strategies for {ticker} (norm. DCA)")
+        plt.xlabel("Date")
+        plt.ylabel("Net worth (ratio)")
+        for strategy in strategyTrackers[ticker]:
+            plt.plot([dp.date for dp in datapoints[ticker]],
+                     [nw / strategyTrackers[ticker][1].netWorthHistory[i]
+                      for i, nw in enumerate(strategy.netWorthHistory)],
+                     label=strategy.__class__.__name__)
+        plt.legend()
+        plt.savefig(f"graphs/Stock_{ticker}_Normalized_DCA.png")
+        plt.close()
 
 
 if __name__ == "__main__":

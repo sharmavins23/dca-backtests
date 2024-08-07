@@ -11,7 +11,7 @@ market fund (using historical federal reserve board data for interest rates). At
 the end of the several-year run, which strategy gains the most net worth?
 
 Gains are aggregated and tested on a variety of differing strategies. All prices
-for buying and selling shares are based on the market's adjusted close value.
+for buying and selling shares are based on the market's close value.
 
 ## Can I make one?
 
@@ -19,6 +19,9 @@ Sure! The structure is designed to spit out a graph for each individual strategy
 added to the `strategies` folder. As such, simply add a strategy to the
 `strategies` folder with the requisite format (see the other strategies for
 examples).
+
+You also have to add the import for the strategy into `main.py`, and add it to
+the list under the `Global Variables` section.
 
 Simply running `python main.py` will execute your strategy and compare it
 alongside the others.
