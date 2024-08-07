@@ -6,11 +6,12 @@ contrast a variety of investing strategies (month-to-month, for long-term
 investing only!) with each other.
 
 The sample scenario is simple: An investor receives $5,000 monthly and can
-either invest in a particular (ETF) stock or hold it in the bank (assuming money
-market nets a 5% return annually, or a ~0.407% yield monthly). At the end of the
-several-year run, which strategy gains the most net worth?
+either invest in a particular (ETF) stock or hold it in a more liquid money
+market fund (using historical federal reserve board data for interest rates). At
+the end of the several-year run, which strategy gains the most net worth?
 
-Gains are aggregated and tested on a variety of differing strategies.
+Gains are aggregated and tested on a variety of differing strategies. All prices
+for buying and selling shares are based on the market's adjusted close value.
 
 # License TL;DR
 
