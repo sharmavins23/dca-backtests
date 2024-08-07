@@ -1,15 +1,18 @@
 import os
 from dataclasses import dataclass
 import datetime
-from strategies.DCA import DCA
+
 from strategies.Sit import Sit
+from strategies.DCA import DCA
+from strategies.HedgedDCA import HedgedDCA
+
 from utils import MarketDatapoint
 import matplotlib.pyplot as plt
 
 # ===== Global variables =======================================================
 
 # Monthly cashflow/income
-monthlyIncome = 5_000.00  # USD for stock investing
+monthlyIncome = 3_000.00  # USD for stock investing
 
 # Yield rates, historically
 yieldRates = []
@@ -18,7 +21,7 @@ yieldRates = []
 tickers = [filename for filename in os.listdir(
     "tickers") if filename.endswith(".csv")]
 tickers = [ticker[:-4] for ticker in tickers]
-strategies = [Sit, DCA]
+strategies = [Sit, DCA, HedgedDCA]
 
 # ===== Data processing step ===================================================
 

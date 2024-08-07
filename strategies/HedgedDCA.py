@@ -2,13 +2,14 @@ from strategies.AbstractStrategy import AbstractStrategy
 from utils import MarketDatapoint
 
 
-class DCA(AbstractStrategy):
+class HedgedDCA(AbstractStrategy):
     def __init__(self):
         super().__init__()
 
     def applyOrderStrategy(self, income: float, dp: MarketDatapoint):
-        # Calculate the number of shares to buy
-        stockShareCount = income / dp.marketClose
+        # Instead of YOLO-ing into the market, we'll hedge our bets
+        self.bankBalance += income * 0.3
 
-        # Since we aren't adding to our bank balance, we can just add shares
+        # Now we can just do DCA with the remainder
+        stockShareCount = (income * 0.7) / dp.marketClose
         self.stockShareCount += stockShareCount

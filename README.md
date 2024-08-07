@@ -5,13 +5,28 @@ some investing principles, I felt it would be interesting to compare and
 contrast a variety of investing strategies (month-to-month, for long-term
 investing only!) with each other.
 
-The sample scenario is simple: An investor receives $5,000 monthly and can
+The sample scenario is simple: An investor receives $3,000 monthly and can
 either invest in a particular (ETF) stock or hold it in a more liquid money
 market fund (using historical federal reserve board data for interest rates). At
 the end of the several-year run, which strategy gains the most net worth?
 
 Gains are aggregated and tested on a variety of differing strategies. All prices
 for buying and selling shares are based on the market's adjusted close value.
+
+## Can I make one?
+
+Sure! The structure is designed to spit out a graph for each individual strategy
+added to the `strategies` folder. As such, simply add a strategy to the
+`strategies` folder with the requisite format (see the other strategies for
+examples).
+
+Simply running `python main.py` will execute your strategy and compare it
+alongside the others.
+
+## Financial breakdown
+
+A more comprehensive breakdown on the financial side of things is in the
+`findocs.md` file.
 
 # License TL;DR
 
